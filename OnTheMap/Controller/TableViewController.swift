@@ -11,8 +11,8 @@ class TableViewController: UITableViewController{
     
     var studentLocations: [StudentLocation]?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         ParseClient.getStudentLocations { results, error in
             self.studentLocations = results
@@ -27,6 +27,18 @@ class TableViewController: UITableViewController{
         UdacityClient.logout(completion: handleLogoutResponse)
     }
     
+    @IBAction func addLocation(_ sender: Any) {
+        
+    }
+    
+    @IBAction func refresh(_ sender: Any) {
+        ParseClient.getStudentLocations { results, error in
+            self.studentLocations = results
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
     func handleLogoutResponse(){
         DispatchQueue.main.async {
             self.dismiss(animated: true, completion: nil)
@@ -44,9 +56,20 @@ class TableViewController: UITableViewController{
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "udacityStudentCell")!
         
-        cell.textLabel?.text = studentLocations![indexPath.row].firstName + studentLocations![indexPath.row].lastName
+        cell.textLabel?.text = studentLocations![indexPath.row].firstName + " " + studentLocations![indexPath.row].lastName
         cell.detailTextLabel?.text = studentLocations![indexPath.row].mediaURL
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let app = UIApplication.shared
+        if let toOpen = studentLocations?[indexPath.row].mediaURL {
+            
+            app.open(URL(string: toOpen)!)
+            
+        }
+        
     }
     
 }

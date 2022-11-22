@@ -14,8 +14,9 @@ class MapViewController: UIViewController, MKMapViewDelegate{
     var studentLocations: [StudentLocation]?
     
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        mapView.delegate = self
         ParseClient.getStudentLocations(completion: handleStudentLocationResponse(result:error:))
         
         
@@ -25,6 +26,11 @@ class MapViewController: UIViewController, MKMapViewDelegate{
         UdacityClient.logout(completion: handleLogoutResponse)
     }
     
+    @IBAction func addLocation(_ sender: Any) {
+    }
+    @IBAction func refresh(_ sender: Any) {
+        ParseClient.getStudentLocations(completion: handleStudentLocationResponse(result:error:))
+    }
     func handleStudentLocationResponse(result: [StudentLocation],error: Error?){
         var annotations = [MKPointAnnotation]()
         if let error = error{
@@ -53,7 +59,10 @@ class MapViewController: UIViewController, MKMapViewDelegate{
         }
         
         // When the array is complete, we add the annotations to the map.
-        self.mapView.addAnnotations(annotations)
+        DispatchQueue.main.async {
+            self.mapView.addAnnotations(annotations)
+        }
+        
 
         
     }
