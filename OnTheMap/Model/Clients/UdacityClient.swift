@@ -58,6 +58,7 @@ class UdacityClient {
                 DispatchQueue.main.async {
                     completion(sessionResponse.account.registered, nil)
                 }
+                ParseClient.Auth.accountKey = sessionResponse.account.key
                 
                 
             } catch {

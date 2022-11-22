@@ -15,16 +15,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchImage" translatesAutoresizingMaskIntoConstraints="NO" id="b22-TQ-udP">
-                                <rect key="frame" x="16" y="59" width="361" height="759"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo-u" translatesAutoresizingMaskIntoConstraints="NO" id="b22-TQ-udP">
+                                <rect key="frame" x="165.66666666666666" y="407.66666666666669" width="62" height="62"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="b22-TQ-udP" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="AhU-ta-Z56"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="b22-TQ-udP" secondAttribute="bottom" id="a83-Qc-Wrf"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="b22-TQ-udP" secondAttribute="trailing" id="kzG-oo-MLZ"/>
-                            <constraint firstItem="b22-TQ-udP" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="topMargin" id="zTh-DW-gag"/>
+                            <constraint firstItem="b22-TQ-udP" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Axc-zf-cAT"/>
+                            <constraint firstItem="b22-TQ-udP" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="l2m-Rd-ndT"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -34,6 +33,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LaunchImage" width="1536" height="2048"/>
+        <image name="logo-u" width="62" height="62"/>
     </resources>
 </document>

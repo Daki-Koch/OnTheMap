@@ -9,17 +9,22 @@ import Foundation
 
 class ParseClient {
     
-    private struct Auth {
+    struct Auth {
         static var sessionId = ""
+        static var objectId = ""
+        static var accountKey = ""
+        static var firstName = "Fred"
+        static var lastName = "Müller"
     }
     enum Endpoints {
         static let base = "https://onthemap-api.udacity.com/v1/StudentLocation"
         
         case limit(Int)
-        
+        case putRequest
         var stringValue: String{
             switch self{
-            case .limit(let value): return Endpoints.base + "?limit=\(value)"
+            case .limit(let value): return Endpoints.base + "?limit=\(value)&order=-updatedAt"
+            case .putRequest: return Endpoints.base + "/\(Auth.objectId)"
             }
                 
         }
@@ -55,28 +60,66 @@ class ParseClient {
         task.resume()
     }
     
-    /*
-    class func taskForGETRequest<ResponseType: Decodable>(url: URL, response: ResponseType.Type, completion: @escaping (ResponseType?, Error?) -> Void) {
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+    
+    class func POSTStudentLocation(location: Location, completion: @escaping (Bool, Error?) -> Void){
+        var request = URLRequest(url: URL(string: Endpoints.base)!)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        do{
+            request.httpBody = try JSONEncoder().encode(location)
+        } catch {
+            DispatchQueue.main.async {
+                completion(false, error)
+            }
+        }
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data else {
                 DispatchQueue.main.async {
-                    completion(nil, error)
+                    completion(false, error)
                 }
                 return
             }
-            let decoder = JSONDecoder()
             do{
-                let responseObject = try decoder.decode(ResponseType.self, from: data)
-                DispatchQueue.main.async {
-                    completion(responseObject, nil)
-                }
+                let locationResponse = try JSONDecoder().decode(LocationResponse.self, from: data)
+                Auth.objectId = locationResponse.objectId
+                completion(true, nil)
             } catch {
                 DispatchQueue.main.async {
-                    completion(nil, error)
+                    completion(false, error)
                 }
             }
         }
         task.resume()
-        
-    }*/
+    }
+    
+    class func PUTStudentLocation(location: Location, completion: @escaping (Bool, Error?) -> Void){
+        var request = URLRequest(url: Endpoints.putRequest.url)
+        request.httpMethod = "PUT"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        do{
+            request.httpBody = try JSONEncoder().encode(location)
+        } catch {
+            DispatchQueue.main.async {
+                completion(false, error)
+            }
+        }
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data else {
+                DispatchQueue.main.async {
+                    completion(false, error)
+                }
+                return
+            }
+            do{
+                let locationResponse = try JSONDecoder().decode(PutResponse.self, from: data)
+                completion(true, nil)
+            } catch {
+                DispatchQueue.main.async {
+                    completion(false, error)
+                }
+            }
+        }
+        task.resume()
+    }
+
 }

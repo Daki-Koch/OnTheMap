@@ -36,7 +36,7 @@ class LoginViewController: UIViewController {
                 self.performSegue(withIdentifier: "completeLogin", sender: nil)
         }
         else {
-            showLoginFailure(message: error?.localizedDescription ?? "")
+            showFailure(message: error?.localizedDescription ?? "", title: "Error Logging in")
             setLoggingIn(false)
         }
     }
@@ -53,10 +53,6 @@ class LoginViewController: UIViewController {
         loginButton.isEnabled = !loggingIn
     }
     
-    func showLoginFailure(message: String){
-        let alertVC = UIAlertController(title: "Login Failed", message: message, preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "OK", style: .default))
-        show(alertVC, sender: nil)
-    }
+
 }
 
