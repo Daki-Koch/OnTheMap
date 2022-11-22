@@ -33,6 +33,9 @@ class TableViewController: UITableViewController{
     
     @IBAction func refresh(_ sender: Any) {
         ParseClient.getStudentLocations { results, error in
+            if let error = error {
+                self.showFailure(message: error.localizedDescription, title: "Error")
+            }
             StudentLocationData.sharedInstance().results = results
             DispatchQueue.main.async {
                 self.tableView.reloadData()

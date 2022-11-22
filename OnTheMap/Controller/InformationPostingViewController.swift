@@ -13,12 +13,7 @@ class InformationPostingViewController: UIViewController{
     @IBOutlet weak var url: UITextField!
     @IBOutlet weak var location: UITextField!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-    }
-    
+
     
     @IBAction func cancel(_ sender: Any) {
         self.dismiss(animated: true)

@@ -33,7 +33,7 @@ class MapViewController: UIViewController, MKMapViewDelegate{
     func handleStudentLocationResponse(result: [StudentLocation],error: Error?){
         var annotations = [MKPointAnnotation]()
         if let error = error{
-            print(error)
+            showFailure(message: error.localizedDescription, title: "Error")
             return
         }
         StudentLocationData.sharedInstance().results = result
