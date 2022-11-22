@@ -27,6 +27,7 @@
 		635732C3292D121F00B87F48 /* PostResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635732C2292D121F00B87F48 /* PostResponse.swift */; };
 		635732C5292D162A00B87F48 /* showAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635732C4292D162A00B87F48 /* showAlert.swift */; };
 		635732C7292D1A9500B87F48 /* PutResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635732C6292D1A9500B87F48 /* PutResponse.swift */; };
+		635732C9292D530D00B87F48 /* StudentGetResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635732C8292D530D00B87F48 /* StudentGetResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		635732C2292D121F00B87F48 /* PostResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostResponse.swift; sourceTree = "<group>"; };
 		635732C4292D162A00B87F48 /* showAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = showAlert.swift; sourceTree = "<group>"; };
 		635732C6292D1A9500B87F48 /* PutResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutResponse.swift; sourceTree = "<group>"; };
+		635732C8292D530D00B87F48 /* StudentGetResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentGetResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				635732AE292B921200B87F48 /* StudentLocationResponse.swift */,
+				635732C8292D530D00B87F48 /* StudentGetResponse.swift */,
 				635732B4292BB85600B87F48 /* SessionResponse.swift */,
 				635732BC292CD44C00B87F48 /* LocationResponse.swift */,
 				635732C2292D121F00B87F48 /* PostResponse.swift */,
@@ -239,6 +242,7 @@
 				635732C7292D1A9500B87F48 /* PutResponse.swift in Sources */,
 				635732C1292CDE6600B87F48 /* LocationConfirmViewController.swift in Sources */,
 				635732AF292B921200B87F48 /* StudentLocationResponse.swift in Sources */,
+				635732C9292D530D00B87F48 /* StudentGetResponse.swift in Sources */,
 				635732BB292CD13200B87F48 /* Location.swift in Sources */,
 				635732C5292D162A00B87F48 /* showAlert.swift in Sources */,
 				635732B3292B9BC500B87F48 /* SessionRequest.swift in Sources */,

@@ -13,8 +13,8 @@ class ParseClient {
         static var sessionId = ""
         static var objectId = ""
         static var accountKey = ""
-        static var firstName = "Fred"
-        static var lastName = "Müller"
+        static var firstName = ""
+        static var lastName = ""
     }
     enum Endpoints {
         static let base = "https://onthemap-api.udacity.com/v1/StudentLocation"
@@ -35,7 +35,7 @@ class ParseClient {
     }
     
     class func getStudentLocations(completion: @escaping ([StudentLocation], Error?) -> Void) {
-        let request = URLRequest(url: Endpoints.limit(200).url)
+        let request = URLRequest(url: Endpoints.limit(100).url)
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data else {
                 DispatchQueue.main.async {
@@ -73,6 +73,12 @@ class ParseClient {
             }
         }
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                DispatchQueue.main.async {
+                    completion(false, error)
+                }
+                return
+            }
             guard let data = data else {
                 DispatchQueue.main.async {
                     completion(false, error)

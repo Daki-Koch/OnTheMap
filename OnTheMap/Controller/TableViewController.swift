@@ -9,13 +9,13 @@ import UIKit
 
 class TableViewController: UITableViewController{
     
-    var studentLocations: [StudentLocation]?
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         ParseClient.getStudentLocations { results, error in
-            self.studentLocations = results
+            StudentLocationData.sharedInstance().results = results
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
@@ -33,7 +33,7 @@ class TableViewController: UITableViewController{
     
     @IBAction func refresh(_ sender: Any) {
         ParseClient.getStudentLocations { results, error in
-            self.studentLocations = results
+            StudentLocationData.sharedInstance().results = results
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
@@ -50,26 +50,27 @@ class TableViewController: UITableViewController{
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return studentLocations?.count ?? 0
+        return StudentLocationData.sharedInstance().results.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "udacityStudentCell")!
         
-        cell.textLabel?.text = studentLocations![indexPath.row].firstName + " " + studentLocations![indexPath.row].lastName
-        cell.detailTextLabel?.text = studentLocations![indexPath.row].mediaURL
+        cell.textLabel?.text = StudentLocationData.sharedInstance().results[indexPath.row].firstName + " " + StudentLocationData.sharedInstance().results[indexPath.row].lastName
+        cell.detailTextLabel?.text = StudentLocationData.sharedInstance().results[indexPath.row].mediaURL
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let app = UIApplication.shared
-        if let toOpen = studentLocations?[indexPath.row].mediaURL {
-            
-            app.open(URL(string: toOpen)!)
-            
+        if let toOpen = StudentLocationData.sharedInstance().results[indexPath.row].mediaURL {
+            if let url = URL(string: toOpen){
+                app.open(url)
+            } else {
+                showFailure(message: "Failed to open URL, please enter valid URL", title: "Failed to open URL")
+            }
         }
-        
     }
     
 }

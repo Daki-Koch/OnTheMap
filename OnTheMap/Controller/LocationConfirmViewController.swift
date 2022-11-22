@@ -46,8 +46,10 @@ class LocationConfirmViewController: UIViewController, MKMapViewDelegate{
                                 self.dismiss(animated: true)
                             }
                         } else {
-                            DispatchQueue.main.async {
-                                self.showFailure(message: error?.localizedDescription ?? "", title: "Error")
+                            if let error = error {
+                                DispatchQueue.main.async {
+                                    self.showFailure(message: error.localizedDescription, title: "Error")
+                                }
                             }
                         }
                     }

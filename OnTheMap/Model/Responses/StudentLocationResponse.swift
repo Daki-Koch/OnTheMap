@@ -20,7 +20,7 @@ struct StudentLocation: Codable, Equatable {
     //the location string used for geocoding the student location
     let mapString: String
     //the URL provided by the student
-    let mediaURL: String
+    let mediaURL: String?
     //the latitude of the student location (ranges from -90 to 90)
     let latitude: Float
     //the longitude of the student location (ranges from -180 to 180)
@@ -36,4 +36,14 @@ struct StudentLocation: Codable, Equatable {
 
 struct StudentLocationResponse: Codable{
     let results: [StudentLocation]
+}
+
+class StudentLocationData: NSObject{
+    var results = [StudentLocation]()
+    class func sharedInstance() -> StudentLocationData{
+        struct Singleton {
+            static var sharedInstance = StudentLocationData()
+        }
+        return Singleton.sharedInstance
+    }
 }

@@ -11,7 +11,6 @@ import MapKit
 class MapViewController: UIViewController, MKMapViewDelegate{
     
     @IBOutlet weak var mapView: MKMapView!
-    var studentLocations: [StudentLocation]?
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,9 +36,9 @@ class MapViewController: UIViewController, MKMapViewDelegate{
             print(error)
             return
         }
-        self.studentLocations = result
+        StudentLocationData.sharedInstance().results = result
         
-        for location in self.studentLocations!{
+        for location in StudentLocationData.sharedInstance().results{
             let lat = CLLocationDegrees(location.latitude)
             let long = CLLocationDegrees(location.longitude)
             let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
@@ -96,7 +95,11 @@ class MapViewController: UIViewController, MKMapViewDelegate{
         if control == view.rightCalloutAccessoryView {
             let app = UIApplication.shared
             if let toOpen = view.annotation?.subtitle! {
-                app.open(URL(string: toOpen)!)
+                if let url = URL(string: toOpen){
+                    app.open(url)
+                } else {
+                    showFailure(message: "Failed to open URL, please enter valid URL", title: "Failed to open URL")
+                }
             }
         }
     }

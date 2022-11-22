@@ -14,10 +14,12 @@ class UdacityClient {
         
         case signUpURL
         case session
+        case getUser
         var stringValue: String{
             switch self{
             case .session: return Endpoints.base + "/session"
             case .signUpURL: return "https://auth.udacity.com/sign-up?next=https://learn.udacity.com"
+            case .getUser: return Endpoints.base + "/users/\(ParseClient.Auth.accountKey)"
                 
             }
         }
@@ -43,6 +45,9 @@ class UdacityClient {
         let session = URLSession.shared
         let task = session.dataTask(with: request) { data, response, error in
             if error != nil {
+                DispatchQueue.main.async {
+                    completion(false, error)
+                }
                 return
             }
             guard let data = data else{
@@ -55,12 +60,26 @@ class UdacityClient {
             let newData = data.subdata(in: range)
             do{
                 let sessionResponse = try JSONDecoder().decode(SessionResponse.self, from: newData)
-                DispatchQueue.main.async {
-                    completion(sessionResponse.account.registered, nil)
-                }
+                ParseClient.Auth.sessionId = sessionResponse.session.id
                 ParseClient.Auth.accountKey = sessionResponse.account.key
-                
-                
+                getUserData { success, error in
+                    if let error = error {
+                        DispatchQueue.main.async {
+                            completion(false, error)
+                        }
+                        return
+                    }
+                    if success {
+                        DispatchQueue.main.async {
+                            completion(sessionResponse.account.registered, nil)
+                        }
+                        
+                    } else {
+                        DispatchQueue.main.async {
+                            completion(false, error)
+                        }
+                    }
+                }
             } catch {
                 do{
                     let sessionResponse = try JSONDecoder().decode(SessionErrorResponse.self, from: newData)
@@ -106,6 +125,40 @@ class UdacityClient {
         task.resume()
     }
     
-    
+    class func getUserData(completion: @escaping (Bool, Error?) -> Void){
+        let request = URLRequest(url: Endpoints.getUser.url)
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                DispatchQueue.main.async {
+                    completion(false, error)
+                }
+                return
+            }
+            guard let data = data else{
+                DispatchQueue.main.async {
+                    completion(false, error)
+                }
+                return
+            }
+            let range = 5..<data.count
+            let newData = data.subdata(in: range)
+            
+            do{
+                let userData = try JSONDecoder().decode(StudentGetResponse.self, from: newData)
+                ParseClient.Auth.firstName = userData.firstName
+                ParseClient.Auth.lastName = userData.lastName
+                DispatchQueue.main.async {
+                    completion(true, nil)
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completion(false, error)
+                }
+      
+            }
+        }
+        task.resume()
+        
+    }
     
 }

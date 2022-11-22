@@ -32,11 +32,16 @@ class LoginViewController: UIViewController {
     
     func handleSessionResponse(success: Bool, error: Error?){
         setLoggingIn(false)
+        if let error = error {
+            showFailure(message: error.localizedDescription, title: "Error Logging in")
+        }
         if success {
                 self.performSegue(withIdentifier: "completeLogin", sender: nil)
         }
         else {
-            showFailure(message: error?.localizedDescription ?? "", title: "Error Logging in")
+            if let error = error {
+                showFailure(message: error.localizedDescription, title: "Error Logging in")
+            }
             setLoggingIn(false)
         }
     }

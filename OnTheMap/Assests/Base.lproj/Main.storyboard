@@ -287,12 +287,17 @@
                                     <action selector="findLocation:" destination="Pwg-TF-NuQ" eventType="touchUpInside" id="K98-ud-fyt"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="t3e-su-dBP">
+                                <rect key="frame" x="186.66666666666666" y="418" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="d5J-bQ-7hF"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="t3e-su-dBP" firstAttribute="top" secondItem="NC5-Ib-usE" secondAttribute="bottom" constant="15" id="0mI-68-SVZ"/>
                             <constraint firstItem="NC5-Ib-usE" firstAttribute="centerX" secondItem="d5J-bQ-7hF" secondAttribute="centerX" id="1Vi-ew-27M"/>
                             <constraint firstItem="1IP-sC-Vpe" firstAttribute="centerX" secondItem="d5J-bQ-7hF" secondAttribute="centerX" id="4vC-WW-eaF"/>
+                            <constraint firstItem="t3e-su-dBP" firstAttribute="centerX" secondItem="d5J-bQ-7hF" secondAttribute="centerX" id="Bv0-kY-w6Y"/>
                             <constraint firstItem="50k-AC-ymh" firstAttribute="top" secondItem="d5J-bQ-7hF" secondAttribute="top" constant="50" id="DJo-eM-mRZ"/>
                             <constraint firstItem="d5J-bQ-7hF" firstAttribute="trailing" secondItem="1IP-sC-Vpe" secondAttribute="trailing" constant="50" id="FUi-GB-8KO"/>
                             <constraint firstItem="50k-AC-ymh" firstAttribute="centerX" secondItem="d5J-bQ-7hF" secondAttribute="centerX" id="J7T-91-iTJ"/>
@@ -312,6 +317,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="activityIndicator" destination="t3e-su-dBP" id="TvE-Ej-nZM"/>
                         <outlet property="location" destination="1IP-sC-Vpe" id="VMK-TN-v6i"/>
                         <outlet property="url" destination="Uor-mK-3nq" id="zNN-4Q-EtY"/>
                         <segue destination="MKR-IT-lhE" kind="show" identifier="FindLocation" id="xP6-KA-CIr"/>

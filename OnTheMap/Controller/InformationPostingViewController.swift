@@ -12,6 +12,7 @@ class InformationPostingViewController: UIViewController{
     
     @IBOutlet weak var url: UITextField!
     @IBOutlet weak var location: UITextField!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -41,12 +42,13 @@ class InformationPostingViewController: UIViewController{
     }
     
     func coordinates(forAddress address: String, completion: @escaping (CLLocationCoordinate2D?) -> Void) {
+        activityIndicator.startAnimating()
         let geocoder = CLGeocoder()
         geocoder.geocodeAddressString(address) {
             (placemarks, error) in
             if let error = error {
                 self.showFailure(message: error.localizedDescription, title: "Location Not Found")
-
+                self.activityIndicator.stopAnimating()
                 DispatchQueue.main.async {
                     completion(nil)
                 }
